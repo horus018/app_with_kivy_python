@@ -6,7 +6,6 @@ from kivy.properties import (
 from kivy.vector import Vector
 from kivy.clock import Clock
 
-
 class PongPaddle(Widget):
     score = NumericProperty(0)
 
@@ -18,7 +17,6 @@ class PongPaddle(Widget):
             vel = bounced * 1.1
             ball.velocity = vel.x, vel.y + offset
 
-
 class PongBall(Widget):
     velocity_x = NumericProperty(0)
     velocity_y = NumericProperty(0)
@@ -26,7 +24,6 @@ class PongBall(Widget):
 
     def move(self):
         self.pos = Vector(*self.velocity) + self.pos
-
 
 class PongGame(Widget):
     ball = ObjectProperty(None)
@@ -40,15 +37,12 @@ class PongGame(Widget):
     def update(self, dt):
         self.ball.move()
 
-        # bounce off paddles
         self.player1.bounce_ball(self.ball)
         self.player2.bounce_ball(self.ball)
 
-        # bounce ball off bottom or top
         if (self.ball.y < self.y) or (self.ball.top > self.top):
             self.ball.velocity_y *= -1
 
-        # went off to a side to score point?
         if self.ball.x < self.x:
             self.player2.score += 1
             self.serve_ball(vel=(4, 0))
@@ -62,14 +56,12 @@ class PongGame(Widget):
         if touch.x > self.width - self.width / 3:
             self.player2.center_y = touch.y
 
-
 class PongApp(App):
     def build(self):
         game = PongGame()
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 60.0)
         return game
-
 
 if __name__ == '__main__':
     PongApp().run()
