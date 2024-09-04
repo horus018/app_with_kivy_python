@@ -1,8 +1,6 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty
-)
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
 
@@ -43,10 +41,11 @@ class PongGame(Widget):
         if (self.ball.y < self.y) or (self.ball.top > self.top):
             self.ball.velocity_y *= -1
 
-        if self.ball.x < self.x:
+        if self.ball.x <= self.x:
             self.player2.score += 1
             self.serve_ball(vel=(4, 0))
-        if self.ball.right > self.width:
+
+        if self.ball.right >= self.width:
             self.player1.score += 1
             self.serve_ball(vel=(-4, 0))
 
